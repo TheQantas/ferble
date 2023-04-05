@@ -1,5 +1,4 @@
 "use strict";
-const fuzzysort_1 = __importDefault(require("fuzzysort"));
 let songIndex = -1;
 let totalPointsEarned = 0;
 let totalPointsPossible = 0;
