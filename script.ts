@@ -22,7 +22,6 @@ const colorDict: {[id:string]:HSL} = {
 window.onload = function(): void {
   shuffleArray(songList);
   advanceToNextSong();
-  buildSongList();
 }
 
 window.onkeydown = function(ev: KeyboardEvent): void {
@@ -97,7 +96,7 @@ function playPauseSong(): void {
   },15);
 }
 
-function useHint(): void {
+function useHint(): void { //linked from html onclick
   if (hintsUsed >= 4) {
     return;
   }
@@ -260,22 +259,26 @@ function getSafeSongTitleFontSize(title: string): number {
       lengthOfLongestWord = word.length;
     }
   }
-  // const titleLengthFontSize: number = Math.round(title.length * 0.9994 - 0.9997);
-  // const longestWordFontSize: number = Math.round(lengthOfLongestWord * -3.1 + 56.9);
   const titleLengthFontSize: number = Math.round(48 - 0.5 * title.length);
   const longestWordFontSize: number = Math.round(55 - 1.4 * lengthOfLongestWord);
+  let scale: number = 1;
+  if (window.innerWidth <= 500) {
+    scale = 0.45;
+  } else if (window.innerWidth <= 680) {
+    scale = 0.5;
+  } else if (window.innerWidth <= 800) {
+    scale = 0.67;
+  } else if (window.innerWidth <= 900) {
+    scale = 0.85;
+  }
   if (lengthOfLongestWord >= 12) {
-    return 24;
+    return 24 * scale;
   }
   if (titleLengthFontSize < 12 && longestWordFontSize < 12) {
-    return 12;
+    return 12 * scale;
   }
-  return Math.min(titleLengthFontSize,longestWordFontSize);
+  return Math.min(titleLengthFontSize,longestWordFontSize) * scale;
 }
-
-// function progressToDegrees(progress: number): number {
-//   return ((-2 * ((progress==0)?1:progress) + 2.5) % 2) * 180;
-// }
 
 function progressToRadians(progress: number): number {
   return (-2 * Math.PI * ((progress==0)?1:progress) + 2.5 * Math.PI) % (Math.PI * 2);
@@ -344,8 +347,7 @@ const songList: Song[] = [
   {id:16,title:'My Goody Two-Shoes Brother',chorus:45,difficulty:5,url:'http://archive.org/download/phineasandferb_202110/My Goody Two-Shoes Brother.mp3'},
   {id:17,title:'My Nemesis',chorus:23,difficulty:2,url:'http://archive.org/download/phineasandferb_202110/My Nemesis.mp3'},
   {id:18,title:'My Undead Mummy And Me',chorus:12,difficulty:3,url:'http://archive.org/download/phineasandferb_202110/My Undead Mummy And Me.mp3'},
-  // {id:-1,title:'Perry The Platypus Theme',chorus:0,difficulty:-1,url:'http://archive.org/download/phineasandferb_202110/Perry The Platypus Theme.mp3'},
-  {id:19,title:'Phinedroid and Ferbots',chorus:0,difficulty:1,url:'http://archive.org/download/phineasandferb_202110/Phinedroids And Ferbots.mp3'},
+  {id:19,title:'Phinedroids and Ferbots',chorus:0,difficulty:1,url:'http://archive.org/download/phineasandferb_202110/Phinedroids And Ferbots.mp3'},
   {id:20,title:'Queen Of Mars',chorus:19,difficulty:3,url:'http://archive.org/download/phineasandferb_202110/Queen Of Mars.mp3'},
   {id:21,title:'Ready For The Bettys',chorus:33,difficulty:2,url:'http://archive.org/download/phineasandferb_202110/Ready For The Bettys.mp3'},
   {id:22,title:'S.I.M.P (Squirrels In My Pants)',chorus:25,difficulty:1,url:'http://archive.org/download/phineasandferb_202110/S.I.M.P (Squirrels In My Pants).mp3'},
