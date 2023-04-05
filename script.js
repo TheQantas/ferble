@@ -122,7 +122,6 @@ function getPointsPossibleForSong(accountForHints) {
     return songList[songIndex].difficulty * 80;
 }
 function buildSongList() {
-    console.log('building songs');
     const parentDOM = document.getElementById('song-list-cont');
     for (const child of parentDOM.children) {
         if (child.id != 'no-matching-dom') {
