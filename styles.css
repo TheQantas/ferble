@@ -1,0 +1,183 @@
+:root {
+  --main: hsl(220,15%,5%);
+  --accent: hsl(220,15%,10%);
+  --double-accent: hsl(220,15%,15%);
+  --triple-accent: hsl(220,15%,20%);
+  --quadruple-accent: hsl(220,15%,25%);
+
+  --counter: hsl(220,15%,95%);
+  --double-counter: hsl(220,15%,90%);
+
+  --blue: hsl(220,70%,42%);
+  --blue-hover: hsl(220,70%,50%);
+  --green: hsl(120,70%,40%);
+  --yellow-green: hsl(90,70%,45%);
+  --yellow: hsl(60,70%,50%);
+  --orange: hsl(30,70%,50%);
+  --red: hsl(5,70%,45%);
+}
+body {
+  margin: 0;
+  background-color: var(--main);
+  display: grid;
+  grid-template-rows: 1fr 1fr 420px 1fr;
+  grid-template-columns: 420px 1fr;
+  padding: 10px;
+  grid-gap: 10px;
+  height: 100vh;
+  box-sizing: border-box;
+  font-family: 'Lato', sans-serif;
+  color: var(--counter);
+}
+*:not(body) {
+  font-family: inherit;
+  color: inherit;
+}
+body > div {
+  position: relative;
+  background-color: var(--accent);
+}
+#circle {
+  height: 100%;
+  width: 100%;
+}
+#action-cont, #advance-cont {
+  height: 60%;
+  width: 60%;
+  top: 20%;
+  left: 20%;
+  position: absolute;
+  background-color: var(--double-accent);
+  border-radius: 50%;
+}
+#action-cont {
+  display: flex;
+}
+#advance-cont {
+  overflow: hidden;
+}
+.action-outer {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.action-btn {
+  width: 70%;
+  border-radius: 50%;
+  background-color: var(--triple-accent);
+  border: none;
+  transition: 100ms;
+}
+.action-btn:not(.disabled):hover {
+  background-color: var(--quadruple-accent);
+  cursor: pointer;
+}
+#hint-btn > svg {
+  fill: var(--red);
+}
+#hint-btn.disabled > svg {
+  fill: var(--quadruple-accent);
+}
+.action-inner {
+  background-color: var(--triple-accent);
+  height: 70%;
+  margin: 15% 0;
+  width: 2px;
+}
+.center-text {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  text-transform: uppercase;
+}
+#feedback, #next-btn {
+  height: 35px;
+  width: 60%;
+  padding: 0 20%;
+  font-size: 18px;
+}
+#feedback {
+  line-height: 42px;
+  text-align: center;
+  text-transform: uppercase;
+}
+#feedback.correct {
+  background-color: var(--green);
+}
+#feedback.incorrect {
+  background-color: var(--red);
+}
+#next-btn {
+  background-color: var(--blue);
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 32px;
+  font-size: 22px;
+}
+#next-btn:hover {
+  background-color: var(--blue-hover);
+  cursor: pointer;
+}
+#feedback-song-title {
+  height: calc(100% - 70px);
+  width: 84%;
+  margin: 0 8%;
+  line-height: 1.2em;
+  font-size: 21px;
+}
+/* song searching and listing */
+#search-cont {
+  display: grid;
+  grid-template-columns: 40px auto;
+}
+#search-cont > *:not(.disabled):not(:focus):hover {
+  background-color: var(--double-accent);
+}
+#search-cont > svg:not(.disabled):hover {
+  cursor: pointer;
+}
+#song-guess-dom {
+  border: none;
+  background-color: var(--accent);
+  padding-left: 5px;
+  font-size: 20px;
+}
+#song-guess-dom:focus {
+  outline: none;
+  background-color: var(--triple-accent);
+}
+#song-list-cont {
+  grid-row: span 3;
+  overflow-y: auto;
+}
+.song-row {
+  height: 40px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 40px auto;
+}
+.song-row:not(.disabled):hover {
+  background-color: var(--double-accent);
+  cursor: pointer;
+}
+.song-row:not(:last-of-type) {
+  border-bottom: 1px solid var(--triple-accent);
+}
+.song-row > svg, #search-cont > svg {
+  height: 36px;
+  width: 36px;
+  padding: 2px;
+  fill: var(--double-counter);
+}
+.song-row > div {
+  line-height: 40px;
+  font-size: 24px;
+  padding-left: 5px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  height: 40px;
+}

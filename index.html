@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Ferble</title>
+
+    <link rel="stylesheet" href="styles.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/fuzzysort@2.0.4/fuzzysort.min.js"></script>
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <div class="center-text" id="total-cont">Total Points:&nbsp;<b>0/0 (0%)</b></div>
+    <div id="search-cont">
+      <svg viewBox="0 0 24 24" role="button" onclick="this.nextElementSibling.focus();">
+        <path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" />
+      </svg>
+      <input type="text" id="song-guess-dom" placeholder="Search Songs..." oninput="searchSongs(this.value)"/>
+    </div>
+    <div class="center-text" id="round-dom">Round Points:&nbsp;<b>0/0</b></div>
+    <div id="song-list-cont">
+      <div class="song-row disabled" id="no-matching-dom" style="display:none;">
+        <svg viewBox="0 0 24 24">
+          <path d="M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2C6.47,2 2,6.47 2,12C2,17.53 6.47,22 12,22C17.53,22 22,17.53 22,12C22,6.47 17.53,2 12,2M14.59,8L12,10.59L9.41,8L8,9.41L10.59,12L8,14.59L9.41,16L12,13.41L14.59,16L16,14.59L13.41,12L16,9.41L14.59,8Z" />
+        </svg>
+        <div style="font-style:italic;">No Matching Songs</div>
+      </div>
+    </div>
+    <div> <!-- main interactive area -->
+      <svg id="circle-graph" viewBox="0 0 1000 1000">
+        <circle cx="500" cy="500" r="440" stroke-width="50" stroke="var(--double-accent)" fill="none"></circle>
+        <path id="progress-arc" d="M 758.6255110086881 144.03252247502314 A 440 440 0 0 0 500 60" fill="none" stroke="var(--green)" stroke-width="30"></path>
+        <!-- outer radius = 470; inner radius = 410 -->
+        <line x1="500" y1="30" x2="500" y2="90" stroke-width="5" stroke="var(--triple-accent)"></line>
+        <line x1="776.3" y1="119.8" x2="741.0" y2="168.32" stroke-width="5" stroke="var(--triple-accent)"></line>
+        <line x1="776.3" y1="119.8" x2="741.0" y2="168.32" stroke-width="5" stroke="var(--triple-accent)"></line>
+        <line x1="970" y1="500" x2="910" y2="500" stroke-width="5" stroke="var(--triple-accent)"></line>
+        <line x1="645.0" y1="947.1" x2="626.5" y2="890.0" stroke-width="5" stroke="var(--triple-accent)"></line>
+        <line x1="53.0" y1="645.3" x2="110.1" y2="626.8" stroke-width="5" stroke="var(--triple-accent)"></line>
+        <line x1="500" y1="30" x2="500" y2="90" stroke-width="5" stroke="var(--counter)" id="playback-counter"></line>
+      </svg>
+      <div id="action-cont">
+        <div class="action-outer">
+          <button class="action-btn" title="Play Song" onclick="playPauseSong()">
+            <svg viewBox="0 0 24 24" style="padding:3%;">
+              <path id="play-pause-icon" fill="var(--green)" d="M8,5.14V19.14L19,12.14L8,5.14Z" />
+            </svg>
+          </button>
+        </div>
+        <div class="action-inner"></div>
+        <div class="action-outer">
+          <button class="action-btn" id="hint-btn" title="Add Time" onclick="useHint()">
+            <svg viewBox="0 0 24 24" style="padding:8%;">
+              <path d="M11 8H13V14H11V8M15 1H9V3H15V1M12 20C8.13 20 5 16.87 5 13S8.13 6 12 6 19 9.13 19 13C19.7 13 20.36 13.13 21 13.35C21 13.23 21 13.12 21 13C21 10.88 20.26 8.93 19.03 7.39L20.45 5.97C20 5.46 19.55 5 19.04 4.56L17.62 6C16.07 4.74 14.12 4 12 4C7.03 4 3 8.03 3 13S7.03 22 12 22C12.59 22 13.16 21.94 13.71 21.83C13.4 21.25 13.18 20.6 13.08 19.91C12.72 19.96 12.37 20 12 20M20 18V15H18V18H15V20H18V23H20V20H23V18H20Z" />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div id="advance-cont" style="display:none;">
+        <div id="feedback"></div>
+        <div id="feedback-song-title" class="center-text"></div>
+        <div id="next-btn" onclick="advanceToNextSong()">Next</div>
+      </div>
+    </div>
+    <div class="center-text" id="difficulty-dom">Difficulty:&nbsp;<b>0/5</b></div>
+    <audio style="display:none;" id="audio-dom">
+      <source src="" type="audio/mpeg">
+    </audio> 
+  </body>
+</html>
