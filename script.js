@@ -1,4 +1,3 @@
-"use strict";
 let songIndex = -1;
 let totalPointsEarned = 0;
 let totalPointsPossible = 0;
@@ -123,6 +122,7 @@ function getPointsPossibleForSong(accountForHints) {
     return songList[songIndex].difficulty * 80;
 }
 function buildSongList() {
+    console.log('building songs');
     const parentDOM = document.getElementById('song-list-cont');
     for (const child of parentDOM.children) {
         if (child.id != 'no-matching-dom') {
@@ -150,7 +150,7 @@ function buildSongList() {
     }
 }
 function searchSongs(search) {
-    const songSearchList = fuzzysort_1.default.go(search, songList, { key: 'title' });
+    const songSearchList = fuzzysort.go(search, songList, { key: 'title' });
     const songListDOM = document.getElementById('song-list-cont');
     const noMatchDOM = document.getElementById('no-matching-dom');
     for (const songRowDOM of songListDOM.children) {
@@ -165,7 +165,7 @@ function searchSongs(search) {
     else {
         for (let i = songSearchList.length - 1; i >= 0; i--) {
             const song = getSongFromTitle(songSearchList[i].target);
-            const highlighted = fuzzysort_1.default.highlight(fuzzysort_1.default.single(search, song.title), '<span style="background-color:var(--quadruple-accent)">', '</span>');
+            const highlighted = fuzzysort.highlight(fuzzysort.single(search, song.title), '<span style="background-color:var(--quadruple-accent)">', '</span>');
             const songRowDOM = document.getElementById('song-row-' + String(song.id));
             songRowDOM.style.display = 'grid';
             songRowDOM.children[1].innerHTML = highlighted;
@@ -236,13 +236,26 @@ function getSafeSongTitleFontSize(title) {
     }
     const titleLengthFontSize = Math.round(48 - 0.5 * title.length);
     const longestWordFontSize = Math.round(55 - 1.4 * lengthOfLongestWord);
+    let scale = 1;
+    if (window.innerWidth <= 500) {
+        scale = 0.45;
+    }
+    else if (window.innerWidth <= 680) {
+        scale = 0.5;
+    }
+    else if (window.innerWidth <= 800) {
+        scale = 0.67;
+    }
+    else if (window.innerWidth <= 900) {
+        scale = 0.85;
+    }
     if (lengthOfLongestWord >= 12) {
-        return 24;
+        return 24 * scale;
     }
     if (titleLengthFontSize < 12 && longestWordFontSize < 12) {
-        return 12;
+        return 12 * scale;
     }
-    return Math.min(titleLengthFontSize, longestWordFontSize);
+    return Math.min(titleLengthFontSize, longestWordFontSize) * scale;
 }
 function progressToRadians(progress) {
     return (-2 * Math.PI * ((progress == 0) ? 1 : progress) + 2.5 * Math.PI) % (Math.PI * 2);
@@ -299,7 +312,7 @@ const songList = [
     { id: 16, title: 'My Goody Two-Shoes Brother', chorus: 45, difficulty: 5, url: 'http://archive.org/download/phineasandferb_202110/My Goody Two-Shoes Brother.mp3' },
     { id: 17, title: 'My Nemesis', chorus: 23, difficulty: 2, url: 'http://archive.org/download/phineasandferb_202110/My Nemesis.mp3' },
     { id: 18, title: 'My Undead Mummy And Me', chorus: 12, difficulty: 3, url: 'http://archive.org/download/phineasandferb_202110/My Undead Mummy And Me.mp3' },
-    { id: 19, title: 'Phinedroid and Ferbots', chorus: 0, difficulty: 1, url: 'http://archive.org/download/phineasandferb_202110/Phinedroids And Ferbots.mp3' },
+    { id: 19, title: 'Phinedroids and Ferbots', chorus: 0, difficulty: 1, url: 'http://archive.org/download/phineasandferb_202110/Phinedroids And Ferbots.mp3' },
     { id: 20, title: 'Queen Of Mars', chorus: 19, difficulty: 3, url: 'http://archive.org/download/phineasandferb_202110/Queen Of Mars.mp3' },
     { id: 21, title: 'Ready For The Bettys', chorus: 33, difficulty: 2, url: 'http://archive.org/download/phineasandferb_202110/Ready For The Bettys.mp3' },
     { id: 22, title: 'S.I.M.P (Squirrels In My Pants)', chorus: 25, difficulty: 1, url: 'http://archive.org/download/phineasandferb_202110/S.I.M.P (Squirrels In My Pants).mp3' },
